@@ -327,7 +327,18 @@
         </div>
 
         <div class="enroll-right">
-          <form class="enroll-form" id="enrollForm" onsubmit="handleSubmit(event)">
+          <form class="enroll-form" id="enrollForm"
+                name="enrollment"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                onsubmit="handleSubmit(event)">
+
+            <!-- Netlify required hidden fields -->
+            <input type="hidden" name="form-name" value="enrollment" />
+            <p class="form-honeypot">
+              <label>Don't fill this out: <input name="bot-field" /></label>
+            </p>
+
             <div class="form-columns">
 
               <!-- ── LEFT COLUMN ── -->

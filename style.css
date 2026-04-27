@@ -869,6 +869,9 @@ img, video { max-width: 100%; display: block; }
 }
 .form-group textarea { resize: vertical; min-height: 108px; }
 
+/* Netlify honeypot — hidden from humans */
+.form-honeypot { display: none; }
+
 /* Checkbox */
 .form-check { margin-top: 8px; margin-bottom: 16px; }
 .check-label {

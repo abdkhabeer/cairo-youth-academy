@@ -34,47 +34,70 @@ document.querySelectorAll('.pkg-btn, .btn').forEach(btn => {
   });
 });
 
-// ── Form submission ──────────────────────────────────────────
+// ── Form submission — Netlify Forms + WhatsApp ───────────────
 function handleSubmit(e) {
   e.preventDefault();
-  const form = document.getElementById('enrollForm');
+
+  const form    = document.getElementById('enrollForm');
   const success = document.getElementById('formSuccess');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
-  // Build WhatsApp message from form data
+  // Disable button while submitting
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
   const data = new FormData(form);
-  const studentName = `${data.get('studentFirst') || ''} ${data.get('studentLast') || ''}`.trim();
-  const parentName  = `${data.get('parentFirst') || ''} ${data.get('parentLast') || ''}`.trim();
-  const pkg         = data.get('package') ? data.get('package').replace('-', ' ').toUpperCase() : 'Not selected';
-  const age         = data.get('studentAge') || 'N/A';
-  const num         = data.get('numStudents') || '1';
-  const email       = data.get('email') || '';
-  const phone       = data.get('phone') || '';
-  const quran       = data.get('quranLevel') || 'N/A';
-  const arabic      = data.get('arabicLevel') || 'N/A';
-  const notes       = data.get('notes') || 'None';
-  const dietary     = data.get('dietary') || 'None';
 
-  const msg = encodeURIComponent(
-    `*New Application — Cairo Youth Academy*\n\n` +
-    `*Student:* ${studentName}, Age ${age}\n` +
-    `*Package:* ${pkg}\n` +
-    `*Number of Students:* ${num}\n\n` +
-    `*Parent/Guardian:* ${parentName}\n` +
-    `*Email:* ${email}\n` +
-    `*Phone:* ${phone}\n\n` +
-    `*Qur'an Level:* ${quran}\n` +
-    `*Arabic Level:* ${arabic}\n` +
-    `*Dietary:* ${dietary}\n\n` +
-    `*Notes:* ${notes}`
-  );
+  // ── 1. POST to Netlify Forms ──────────────────────────────
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(data).toString()
+  })
+  .then(() => {
+    // ── 2. Show success state ────────────────────────────────
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-  // Open WhatsApp with pre-filled message
-  window.open(`https://wa.me/15713265041?text=${msg}`, '_blank');
+    // ── 3. Also ping WhatsApp with a summary ─────────────────
+    const studentName = `${data.get('studentFirst') || ''} ${data.get('studentLast') || ''}`.trim();
+    const parentName  = `${data.get('parentFirst') || ''} ${data.get('parentLast') || ''}`.trim();
+    const pkg         = data.get('package') ? data.get('package').replace('-', ' ').toUpperCase() : 'Not selected';
+    const age         = data.get('studentAge') || 'N/A';
+    const num         = data.get('numStudents') || '1';
+    const email       = data.get('email') || '';
+    const phone       = data.get('phone') || '';
+    const quran       = data.get('quranLevel') || 'N/A';
+    const arabic      = data.get('arabicLevel') || 'N/A';
+    const dietary     = data.get('dietary') || 'None';
+    const notes       = data.get('notes') || 'None';
 
-  // Show success state
-  form.style.display = 'none';
-  success.style.display = 'block';
-  success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const msg = encodeURIComponent(
+      `*New Application — Cairo Youth Academy*\n\n` +
+      `*Student:* ${studentName}, Age ${age}\n` +
+      `*Package:* ${pkg}\n` +
+      `*# of Students:* ${num}\n\n` +
+      `*Parent:* ${parentName}\n` +
+      `*Email:* ${email}\n` +
+      `*Phone:* ${phone}\n\n` +
+      `*Qur'an Level:* ${quran}\n` +
+      `*Arabic Level:* ${arabic}\n` +
+      `*Dietary:* ${dietary}\n\n` +
+      `*Notes:* ${notes}`
+    );
+
+    // Short delay so success state renders first
+    setTimeout(() => {
+      window.open(`https://wa.me/15713265041?text=${msg}`, '_blank');
+    }, 800);
+  })
+  .catch(() => {
+    // Re-enable button and show error
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = 'Submit Application <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"/></svg>';
+    alert('Something went wrong. Please try again or message us directly on WhatsApp: +1 (571) 326-5041');
+  });
 }
 
 // ── Fade-in on scroll ────────────────────────────────────────
