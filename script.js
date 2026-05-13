@@ -47,12 +47,34 @@ function handleSubmit(e) {
   submitBtn.textContent = 'Submitting…';
 
   const data = new FormData(form);
+  const payload = {
+    "form-name":  "enrollment",
+    studentFirst: data.get("studentFirst") || "",
+    studentLast:  data.get("studentLast")  || "",
+    studentAge:   data.get("studentAge")   || "",
+    gender:       data.get("gender")       || "",
+    numStudents:  data.get("numStudents")  || "",
+    package:      data.get("package")      || "",
+    quranLevel:   data.get("quranLevel")   || "",
+    arabicLevel:  data.get("arabicLevel")  || "",
+    parentFirst:  data.get("parentFirst")  || "",
+    parentLast:   data.get("parentLast")   || "",
+    email:        data.get("email")        || "",
+    phone:        data.get("phone")        || "",
+    city:         data.get("city")         || "",
+    dietary:      data.get("dietary")      || "",
+    medical:      data.get("medical")      || "",
+    notes:        data.get("notes")        || "",
+    consent:      data.get("consent") ? "Accepted" : "Not Accepted"
+  };
+
+  console.log("Submitting Payload:", payload); // Remove after verified
 
   // ── 1. POST to Netlify Forms ──────────────────────────────
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(data).toString()
+  fetch("/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(payload).toString()
   })
   .then(() => {
     // ── 2. Show success state ────────────────────────────────
@@ -61,35 +83,21 @@ function handleSubmit(e) {
     success.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     // ── 3. Also ping WhatsApp with a summary ─────────────────
-    const studentName = `${data.get('studentFirst') || ''} ${data.get('studentLast') || ''}`.trim();
-    const parentName  = `${data.get('parentFirst') || ''} ${data.get('parentLast') || ''}`.trim();
-    const pkg         = data.get('package') ? data.get('package').replace('-', ' ').toUpperCase() : 'Not selected';
-    const age         = data.get('studentAge') || 'N/A';
-    const gender      = data.get('gender') || 'N/A';
-    const num         = data.get('numStudents') || '1';
-    const email       = data.get('email') || '';
-    const phone       = data.get('phone') || '';
-    const city        = data.get('city') || 'N/A';
-    const quran       = data.get('quranLevel') || 'N/A';
-    const arabic      = data.get('arabicLevel') || 'N/A';
-    const dietary     = data.get('dietary') || 'None';
-    const medical     = data.get('medical') || 'None';
-    const notes       = data.get('notes') || 'None';
-
     const msg = encodeURIComponent(
-      `*New Application — Cairo Youth Academy*\n\n` +
-      `*Student:* ${studentName}, Age ${age}, ${gender}\n` +
-      `*Package:* ${pkg}\n` +
-      `*# of Students:* ${num}\n\n` +
-      `*Parent:* ${parentName}\n` +
-      `*Email:* ${email}\n` +
-      `*Phone:* ${phone}\n` +
-      `*City:* ${city}\n\n` +
-      `*Qur'an Level:* ${quran}\n` +
-      `*Arabic Level:* ${arabic}\n` +
-      `*Dietary:* ${dietary}\n` +
-      `*Medical:* ${medical}\n\n` +
-      `*Notes:* ${notes}`
+      `*New Application — Shabaabunaa Academy*\n\n` +
+      `*Student:* ${payload.studentFirst} ${payload.studentLast}, Age ${payload.studentAge}, ${payload.gender}\n` +
+      `*Package:* ${payload.package.replace('-', ' ').toUpperCase()}\n` +
+      `*# of Students:* ${payload.numStudents}\n\n` +
+      `*Parent:* ${payload.parentFirst} ${payload.parentLast}\n` +
+      `*Email:* ${payload.email}\n` +
+      `*Phone:* ${payload.phone}\n` +
+      `*City:* ${payload.city}\n\n` +
+      `*Qur'an Level:* ${payload.quranLevel}\n` +
+      `*Arabic Level:* ${payload.arabicLevel}\n` +
+      `*Dietary:* ${payload.dietary}\n` +
+      `*Medical:* ${payload.medical}\n\n` +
+      `*Notes:* ${payload.notes}\n` +
+      `*Consent:* ${payload.consent}`
     );
 
     // Short delay so success state renders first
