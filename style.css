@@ -670,7 +670,6 @@ img, video { max-width: 100%; display: block; }
 .enroll-grid {
   display: grid;
   grid-template-columns: 400px 1fr;
-  min-height: 100vh;
   align-items: stretch;
 }
 
@@ -683,7 +682,9 @@ img, video { max-width: 100%; display: block; }
   justify-content: center;
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
+  align-self: stretch;
   overflow: hidden;
 }
 .enroll-left::before {
