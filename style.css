@@ -828,7 +828,7 @@ img, video { max-width: 100%; display: block; }
 }
 .req { color: var(--gold-deep); }
 
-.form-group input,
+.form-group input:not([type="checkbox"]),
 .form-group select,
 .form-group textarea {
   background: var(--sand-ultra);
