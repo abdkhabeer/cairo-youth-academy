@@ -371,8 +371,8 @@
                     <input type="number" id="studentAge" name="studentAge" min="8" max="25" placeholder="e.g. 14" required />
                   </div>
                   <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <select id="gender" name="gender">
+                    <label for="gender">Gender <span class="req">*</span></label>
+                    <select id="gender" name="gender" required>
                       <option value="">Select...</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -407,8 +407,8 @@
                 <div class="form-section-label">Qur'an & Arabic Background</div>
 
                 <div class="form-group">
-                  <label for="quranLevel">Current Qur'an Level</label>
-                  <select id="quranLevel" name="quranLevel">
+                  <label for="quranLevel">Current Qur'an Level <span class="req">*</span></label>
+                  <select id="quranLevel" name="quranLevel" required>
                     <option value="">Select...</option>
                     <option value="beginner">Beginner — still learning to read</option>
                     <option value="reading">Can read fluently, no hifz yet</option>
@@ -419,8 +419,8 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="arabicLevel">Arabic Level</label>
-                  <select id="arabicLevel" name="arabicLevel">
+                  <label for="arabicLevel">Arabic Level <span class="req">*</span></label>
+                  <select id="arabicLevel" name="arabicLevel" required>
                     <option value="">Select...</option>
                     <option value="none">No Arabic background</option>
                     <option value="basic">Basic (knows alphabet, some words)</option>
@@ -456,25 +456,25 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="city">City & State / Country</label>
-                  <input type="text" id="city" name="city" placeholder="e.g. Herndon, VA" />
+                  <label for="city">City & State / Country <span class="req">*</span></label>
+                  <input type="text" id="city" name="city" placeholder="e.g. Herndon, VA" required />
                 </div>
 
                 <div class="form-section-label">Additional Information</div>
 
                 <div class="form-group">
-                  <label for="dietary">Dietary Requirements / Allergies</label>
-                  <input type="text" id="dietary" name="dietary" placeholder="e.g. nut allergy, vegetarian, etc." />
+                  <label for="dietary">Dietary Requirements / Allergies <span class="req">*</span></label>
+                  <input type="text" id="dietary" name="dietary" placeholder="e.g. nut allergy, vegetarian, or 'None'" required />
                 </div>
 
                 <div class="form-group">
-                  <label for="medical">Medical Conditions or Special Needs</label>
-                  <input type="text" id="medical" name="medical" placeholder="Anything our team should be aware of" />
+                  <label for="medical">Medical Conditions or Special Needs <span class="req">*</span></label>
+                  <input type="text" id="medical" name="medical" placeholder="Anything our team should be aware of, or 'None'" required />
                 </div>
 
                 <div class="form-group">
-                  <label for="notes">Anything Else You'd Like Us to Know?</label>
-                  <textarea id="notes" name="notes" rows="5" placeholder="Goals, questions, specific requests..."></textarea>
+                  <label for="notes">Anything Else You'd Like Us to Know? <span class="req">*</span></label>
+                  <textarea id="notes" name="notes" rows="5" placeholder="Goals, questions, specific requests, or 'None'" required></textarea>
                 </div>
               </div>
 
