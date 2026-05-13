@@ -65,25 +65,30 @@ function handleSubmit(e) {
     const parentName  = `${data.get('parentFirst') || ''} ${data.get('parentLast') || ''}`.trim();
     const pkg         = data.get('package') ? data.get('package').replace('-', ' ').toUpperCase() : 'Not selected';
     const age         = data.get('studentAge') || 'N/A';
+    const gender      = data.get('gender') || 'N/A';
     const num         = data.get('numStudents') || '1';
     const email       = data.get('email') || '';
     const phone       = data.get('phone') || '';
+    const city        = data.get('city') || 'N/A';
     const quran       = data.get('quranLevel') || 'N/A';
     const arabic      = data.get('arabicLevel') || 'N/A';
     const dietary     = data.get('dietary') || 'None';
+    const medical     = data.get('medical') || 'None';
     const notes       = data.get('notes') || 'None';
 
     const msg = encodeURIComponent(
       `*New Application — Cairo Youth Academy*\n\n` +
-      `*Student:* ${studentName}, Age ${age}\n` +
+      `*Student:* ${studentName}, Age ${age}, ${gender}\n` +
       `*Package:* ${pkg}\n` +
       `*# of Students:* ${num}\n\n` +
       `*Parent:* ${parentName}\n` +
       `*Email:* ${email}\n` +
-      `*Phone:* ${phone}\n\n` +
+      `*Phone:* ${phone}\n` +
+      `*City:* ${city}\n\n` +
       `*Qur'an Level:* ${quran}\n` +
       `*Arabic Level:* ${arabic}\n` +
-      `*Dietary:* ${dietary}\n\n` +
+      `*Dietary:* ${dietary}\n` +
+      `*Medical:* ${medical}\n\n` +
       `*Notes:* ${notes}`
     );
 
