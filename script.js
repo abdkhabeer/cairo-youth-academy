@@ -48,7 +48,7 @@ function handleSubmit(e) {
 
   const data = new FormData(form);
   const payload = {
-    "form-name":  "enrollment",
+    "form-name":  "enrollment_v2",
     studentFirst: document.getElementById("studentFirst")?.value.trim() || "",
     studentLast:  document.getElementById("studentLast")?.value.trim()  || "",
     studentAge:   data.get("studentAge")   || "",
